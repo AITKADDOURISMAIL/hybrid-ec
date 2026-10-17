@@ -1,7 +1,0 @@
-[package]
-name = "hec-curves"
-edition.workspace = true
-version.workspace = true
-
-[dependencies]
-hec-core = { path = "../core" }
