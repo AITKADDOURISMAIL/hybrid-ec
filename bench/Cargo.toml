@@ -1,0 +1,21 @@
+[package]
+name = "hec-bench"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+hec-core = { path = "../core" }
+hec-curves = { path = "../curves" }
+hec-validation = { path = "../validation" }
+ed25519-dalek = { version = "2", optional = true }
+ed25519-zebra = { version = "4", optional = true }
+secp256k1 = { version = "0.29", optional = true }
+k256 = { version = "0.13", optional = true, features = ["ecdsa", "schnorr", "arithmetic"] }
+
+[features]
+baselines = ["dep:ed25519-dalek", "dep:ed25519-zebra", "dep:secp256k1", "dep:k256"]
+
+[[bin]]
+name = "diff"
+path = "src/bin/diff.rs"
+required-features = ["baselines"]

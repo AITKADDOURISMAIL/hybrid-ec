@@ -1,0 +1,4 @@
+[package]
+name = "hec-core"
+edition.workspace = true
+version.workspace = true

@@ -1,0 +1,8 @@
+[package]
+name = "hec-validation"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+hec-core = { path = "../core" }
+hec-curves = { path = "../curves" }
