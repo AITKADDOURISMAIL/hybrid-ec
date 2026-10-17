@@ -1,0 +1,14 @@
+routine,variant,campaigns_flagged,max_abs_t_cropped_range
+A/A control,shipped,0/5,<=2.40
+field chain control,shipped,0/5,<=2.79
+leaky double-and-add control,shipped,5/5,1646-1916
+secp256k1 fixed-base c=5,shipped,0/5,<=2.51
+ed25519 fixed-base c=4,shipped,0/5,<=1.57
+secp256k1 regular double-and-add,shipped,0/5,<=2.43
+ed25519 regular double-and-add,shipped,0/5,<=2.97
+x25519 ladder,shipped,0/5,<=2.42
+A/A control,naive-select,0/5,<=2.93
+leaky double-and-add control,naive-select,5/5,1196-1776
+secp256k1 fixed-base c=5,naive-select,5/5,93-124
+ed25519 fixed-base c=4,naive-select,5/5,68-92
+x25519 ladder,naive-select,5/5,78-175

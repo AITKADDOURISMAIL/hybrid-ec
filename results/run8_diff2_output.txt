@@ -1,0 +1,28 @@
+Wycheproof Ed25519: 151 vectors, 12 with a signature of wrong length (rejected before verification)
+Wycheproof Ed25519: P_c vs expected                        agree 138/139  disagree 1
+    ours=true lib=false tcId 151
+Wycheproof Ed25519: P_s vs expected                        agree 139/139  disagree 0
+Wycheproof Ed25519: P_c vs ed25519-zebra                   agree 139/139  disagree 0
+Wycheproof Ed25519: P_s vs dalek verify_strict             agree 139/139  disagree 0
+Wycheproof Ed25519: dalek verify vs expected               agree 139/139  disagree 0
+Wycheproof Ed25519: zebra vs expected                      agree 138/139  disagree 1
+    ours=true lib=false tcId 151
+Wycheproof ECDSA: ours vs expected                         agree 472/474  disagree 2
+    ours=true lib=false ecdsa_secp256k1_sha256_bitcoin_test:1
+    ours=true lib=false ecdsa_secp256k1_sha256_bitcoin_test:388
+Wycheproof ECDSA: ours vs libsecp256k1 (s normalized)      agree 474/474  disagree 0
+Wycheproof ECDSA: ours vs k256 (s normalized)              agree 474/474  disagree 0
+Wycheproof ECDSA: libsecp256k1 (s normalized) vs expected  agree 472/474  disagree 2
+    ours=true lib=false ecdsa_secp256k1_sha256_bitcoin_test:1
+    ours=true lib=false ecdsa_secp256k1_sha256_bitcoin_test:388
+ECDSA vectors rejected before verification by the strict DER parser: 466 (of which expected valid: 0)
+Mutation Ed25519 (1000000): P_c vs zebra                   agree 892944/892944  disagree 0
+Mutation Ed25519: P_s vs dalek verify_strict               agree 892944/892944  disagree 0
+Mutation Ed25519: P_c vs dalek verify                      agree 892944/892944  disagree 0
+    (mutants accepted by P_c: 648)
+Mutation BIP-340 (1000000, 13 seeds): ours vs libsecp256k1 agree 842297/842297  disagree 0
+Mutation BIP-340: ours vs k256                             agree 842297/842297  disagree 0
+    (mutants accepted by ours: 516)
+Mutation ECDSA (1000000, 120 seeds): ours vs libsecp256k1 (s norm.) agree 1000000/1000000  disagree 0
+Mutation ECDSA: ours vs k256 (s normalized)                agree 1000000/1000000  disagree 0
+    (mutants accepted by ours: 718)
