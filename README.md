@@ -31,7 +31,8 @@ Libraries: ed25519-dalek 2 (verify, verify_strict), ed25519-zebra 4 (ZIP-215), s
 
 ## Timing method (clock-state independent)
 Laptop cores switch clock state several times per second; on the i5-1035G1 every operation changed by
-the same factor (2.97, sd 1.3%) between two states, so time is proportional to frequency. Every sample
+the same factor between the median slow and fast states (calibration 2.99, field operations 3.00-3.02,
+see results/run9_clockstates.txt; program bench/src/bin/clockstates.rs), so time is proportional to frequency. Every sample
 is normalized individually: a short fixed-work calibration runs right before and after the timed batch,
 units = batch ns per op / mean calibration ns per step. A sample whose two calibrations differ by more
 than --tol % (default 25) is dirty and excluded; each of the R passes reports the median of its clean

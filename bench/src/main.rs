@@ -38,8 +38,8 @@ fn median(v: &mut Vec<f64>) -> f64 { v.sort_by(|a, b| a.partial_cmp(b).unwrap())
 
 struct Cfg { n: usize, runs: usize, filter: String, label: String, out: std::fs::File, ref_calib: f64, tol: f64 }
 
-/// Empirical cycles per calibration step (0.139 ns at 3.6 GHz and 0.505 ns at 1.0 GHz on the
-/// i5-1035G1 both give about 0.50). Used only to turn normalized units into an estimated cycle count.
+/// Empirical cycles per calibration step (0.139 ns at 3.6 GHz, 0.419 ns at about 1.2 GHz and 0.505 ns at
+/// 1.0 GHz on the i5-1035G1 all give about 0.50; the frequencies are nominal, not read from a counter). Used only to turn normalized units into an estimated cycle count.
 const KAPPA: f64 = 0.50;
 
 /// Short calibration: fixed-work dependent chain of CAL_STEPS steps; returns ns per step.

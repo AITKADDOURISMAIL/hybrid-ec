@@ -1,0 +1,10 @@
+clockstates run (60 s, mains power, best-performance mode), i5-1035G1, Windows
+78179 clean samples in 60 s
+calibration step: 5th percentile 0.1390 ns, 95th percentile 0.5020 ns (ratio 3.612)
+fast state: 65882 samples, slow state: 12297 samples (threshold 0.2642 ns)
+
+workload                  fast (ns)    slow (ns)  slow/fast
+calibration step             0.1400       0.4190      2.993
+field mul 25519             29.5500      89.1000      3.015
+field mul secp256k1         43.9500     132.5000      3.015
+field add 25519             11.4350      34.3150      3.001
