@@ -15,3 +15,6 @@ The Ed25519 doubling row of `run4_summary.csv` (range 38%) is unreliable and is 
 - `run11_ct_shipped_all_laptop_pinned.csv`, `run11_ct_naive_all_laptop_pinned.csv`: dudect-style test of all routines (Windows laptop, turbo off, maximum processor state 99 %), shipped build and `--features naive-select`.
 - `run11_ctgrind.txt`: ctgrind-style check with valgrind (`bench/ctgrind.sh`): 0 findings for the shipped build; for the naive build no conditional branch but secret-dependent addresses in all five routines.
 - `asm_*_Point_select.s`: x86-64 assembly (rustc 1.x, Linux container) of `ed25519::Point::select`: masked and/xor in the shipped build, `test; cmovne` on the operand pointers followed by loads through the selected pointer in the naive build.
+
+## Official BIP-340 vectors
+`validation/tests/bip340_official.csv` is the unchanged `bip-0340/test-vectors.csv` of the BIP repository (19 cases); `validation/tests/bip340_official.rs` runs it through the unified verifier, the single-curve counterpart and the batch verifier.
