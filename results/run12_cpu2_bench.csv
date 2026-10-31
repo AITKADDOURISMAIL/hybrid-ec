@@ -1,0 +1,10 @@
+label,benchmark,N,R,inner,units_median,cycles_est,raw_ns_median,range_units_pct,clean_pct_min,calib_min_ns,calib_max_ns,unstable
+cpu2,verify/ed25519/P_c reference (naive),10000,5,1,2744495.41,1372247.7,533000.0,0.151,87.1,0.1630,0.3620,0
+cpu2,verify/ed25519/P_c fast (wNAF),10000,5,1,849103.94,424552.0,164100.0,0.061,91.6,0.1620,0.4780,0
+cpu2,verify/ed25519/P_s fast (wNAF),10000,5,1,979908.68,489954.3,189500.0,0.068,90.1,0.1600,0.4800,0
+cpu2,verify/ed25519/P_c dedicated arithmetic only (unified decoding),10000,5,1,721839.08,360919.5,127100.0,0.108,92.1,0.1610,0.5580,0
+cpu2,verify/ed25519/P_c dedicated (single-curve baseline),10000,5,1,479274.61,239637.3,92600.0,0.108,92.9,0.1620,0.4790,0
+cpu2,verify/bip340 (GLV + wNAF),10000,5,1,930412.37,465206.2,178800.0,0.244,91.0,0.1620,0.5010,0
+cpu2,verify/bip340 dedicated arithmetic only (unified sqrt/inversion),10000,5,1,887628.87,443814.4,170800.0,0.097,91.4,0.1560,0.3920,0
+cpu2,verify/bip340 dedicated (single-curve baseline),10000,5,1,762068.97,381034.5,146800.0,0.100,91.8,0.1610,0.3640,0
+cpu2,verify/ecdsa (GLV + wNAF),10000,5,1,822164.95,411082.5,157500.0,0.228,91.9,0.1590,0.5070,0

@@ -1,0 +1,9 @@
+
+
+Name                      : Intel(R) Core(TM) 3 100U
+MaxClockSpeed             : 1200
+NumberOfCores             : 6
+NumberOfLogicalProcessors : 8
+
+
+

@@ -18,3 +18,11 @@ The Ed25519 doubling row of `run4_summary.csv` (range 38%) is unreliable and is 
 
 ## Official BIP-340 vectors
 `validation/tests/bip340_official.csv` is the unchanged `bip-0340/test-vectors.csv` of the BIP repository (19 cases); `validation/tests/bip340_official.rs` runs it through the unified verifier, the single-curve counterpart and the batch verifier.
+
+## run12 (second processor)
+Intel Core 3 100U (6 cores / 8 threads as reported by Windows), Windows 11 10.0.26200, rustc 1.99.1, tag v1.2.1.
+Thread pinned with `start /affinity 1` (assumed to be a performance core, not verified); frequency not locked and not read from a counter
+(calibration step 0.156-0.558 ns during the benchmark). The 0.5 cycle/unit constant of the first machine does not apply: use ratios only.
+- `run12_cpu2_ct_shipped.csv`, `run12_cpu2_ct_naive.csv`: dudect-style test, 5 campaigns x 10^5 measurements, shipped and `naive-select` builds.
+- `run12_cpu2_bench.csv`: `verify/` benchmarks (unified, dedicated arithmetic only, dedicated).
+- `run12_cpu2_cpu_name.txt`: processor model.
