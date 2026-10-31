@@ -1,0 +1,14 @@
+Informal container run (Xeon, Linux, shared, noisy clock; --quick --runs 3). NOT for the paper: rerun on the laptop
+  cargo run --release -p hec-bench -- --filter verify/ --label laptop-pinned
+  cargo run --release -p hec-bench -- --filter decode/ --label laptop-pinned
+Verification (raw ns, one signature):
+  ed25519 P_c unified (wNAF)                        131 000
+  ed25519 P_c dedicated arithmetic only              111 000   (-15 %)
+  ed25519 P_c dedicated (+ addition-chain sqrt)       73 000   (-44 %)
+  bip340 unified (GLV+wNAF)                          140 700
+  bip340 dedicated arithmetic only                   134 000   (-5 %)
+  bip340 dedicated (+ addition-chain sqrt/inversion) 116 600   (-17 %)
+Decoding one Ed25519 point: unified 27.5 us, chain 8.9 us. secp256k1 inversion: binary 18.6 us, chain 10.4 us.
+Reading: the part attributable to the unified formulas/limb handling is about 15 % (Ed25519) and 5 % (BIP-340);
+the rest is exponentiation chains, which the unified layer can adopt without breaking unification (future work).
+All verdicts of the dedicated variants equal the unified ones (validation/tests/dedicated.rs, debug and release).

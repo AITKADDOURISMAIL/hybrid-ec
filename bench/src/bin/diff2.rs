@@ -3,7 +3,7 @@
 #[path = "../baselines.rs"]
 mod baselines;
 use baselines::*;
-use hec_validation::{secp_sig, sign_for_tests, verify_fast, Policy};
+use hec_validation::{secp_sig, verify_fast, Policy};
 
 fn hx(s: &str) -> Vec<u8> { if s == "-" { return vec![]; } (0..s.len() / 2).map(|i| u8::from_str_radix(&s[2 * i..2 * i + 2], 16).unwrap()).collect() }
 fn a32(s: &str) -> [u8; 32] { hx(s).try_into().unwrap() }
@@ -84,10 +84,10 @@ fn main() {
     // ===== Random mutations
     let mut rng = Rng(0x9E3779B97F4A7C15);
     // Ed25519
-    let seeds: Vec<([u8; 32], Vec<u8>, [u8; 64])> = (0..64).map(|i| {
-        let mut sd = [0u8; 32]; for b in sd.iter_mut() { *b = rng.next() as u8 }
-        let msg: Vec<u8> = (0..(i % 65)).map(|_| rng.next() as u8).collect();
-        let (pk, sig) = sign_for_tests(&sd, &msg); (pk, msg, sig)
+    // seeds: valid signatures made by libsodium and OpenSSL (validation/tests/vetted_ed25519.txt), not by the prototype
+    let seeds: Vec<([u8; 32], Vec<u8>, [u8; 64])> = include_str!("../../../validation/tests/vetted_ed25519.txt").lines().filter_map(|l| {
+        let f: Vec<&str> = l.split(' ').collect();
+        if f[3] == "1" { Some((a32(f[0]), hx(f[1]), <[u8; 64]>::try_from(hx(f[2])).unwrap())) } else { None }
     }).collect();
     let mut t = [Tally::new(&format!("Mutation Ed25519 ({nmut}): P_c vs zebra")), Tally::new("Mutation Ed25519: P_s vs dalek verify_strict"), Tally::new("Mutation Ed25519: P_c vs dalek verify")];
     let mut accepted = 0usize;
@@ -103,9 +103,9 @@ fn main() {
     }
     for x in &t { x.print(); } println!("    (mutants accepted by P_c: {accepted})");
     // BIP-340
-    let bp: Vec<([u8; 32], Vec<u8>, [u8; 64])> = include_str!("../../../validation/tests/bip340.txt").lines().map(|l| {
-        let f: Vec<&str> = l.split(' ').collect(); (a32(f[0]), hx(f[1]), <[u8; 64]>::try_from(hx(f[2])).unwrap())
-    }).filter(|c| c.1.len() == 32 && secp_sig::bip340_verify(&c.0, &c.1, &c.2)).collect();
+    let bp: Vec<([u8; 32], Vec<u8>, [u8; 64])> = include_str!("../../../validation/tests/vetted_bip340.txt").lines().map(|l| {
+        let f: Vec<&str> = l.split(' ').collect(); (a32(f[0]), hx(f[1]), <[u8; 64]>::try_from(hx(f[2])).unwrap(), f[3] == "1")
+    }).filter(|c| c.3 && c.1.len() == 32 && secp_sig::bip340_verify(&c.0, &c.1, &c.2)).map(|c| (c.0, c.1, c.2)).collect();
     let mut t = [Tally::new(&format!("Mutation BIP-340 ({nmut}, {} seeds): ours vs libsecp256k1", bp.len())), Tally::new("Mutation BIP-340: ours vs k256")];
     let mut accepted = 0usize;
     for _ in 0..nmut {
@@ -120,7 +120,7 @@ fn main() {
     }
     for x in &t { x.print(); } println!("    (mutants accepted by ours: {accepted})");
     // ECDSA
-    let ec: Vec<[[u8; 32]; 5]> = include_str!("../../../validation/tests/ecdsa.txt").lines().filter_map(|l| {
+    let ec: Vec<[[u8; 32]; 5]> = include_str!("../../../validation/tests/vetted_ecdsa.txt").lines().filter_map(|l| {
         let f: Vec<&str> = l.split(' ').collect(); if f[5] == "1" { Some([a32(f[0]), a32(f[1]), a32(f[2]), a32(f[3]), a32(f[4])]) } else { None }
     }).collect();
     let mut t = [Tally::new(&format!("Mutation ECDSA ({nmut}, {} seeds): ours vs libsecp256k1 (s norm.)", ec.len())), Tally::new("Mutation ECDSA: ours vs k256 (s normalized)")];

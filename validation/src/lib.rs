@@ -172,3 +172,25 @@ pub fn sign_for_tests(seed: &[u8; 32], msg: &[u8]) -> ([u8; 32], [u8; 64]) {
     sig[..32].copy_from_slice(&rb); sig[32..].copy_from_slice(&sb);
     (pk, sig)
 }
+
+/// Single-curve baseline (Ed25519 only): the same predicate as `verify_fast(.., Policy::Cofactored)` evaluated with the
+/// dedicated arithmetic (dedicated squaring, lazy additions, cached 8M addition, addition-chain square root).
+/// Used only to measure what the unified layer costs; the verdicts must be identical (tests/dedicated.rs).
+pub fn verify_fast_dedicated(pk: &[u8; 32], msg: &[u8], sig: &[u8; 64]) -> bool { dedicated_impl(pk, msg, sig, true) }
+/// Ablation: dedicated point arithmetic only, with the unified decoding (binary-exponentiation square root).
+pub fn verify_fast_dedicated_arith_only(pk: &[u8; 32], msg: &[u8], sig: &[u8; 64]) -> bool { dedicated_impl(pk, msg, sig, false) }
+fn dedicated_impl(pk: &[u8; 32], msg: &[u8], sig: &[u8; 64], chain: bool) -> bool {
+    use hec_curves::dedicated::ed;
+    let dec = |b: &[u8; 32]| if chain { ed::decompress_chain(b) } else { Point::decompress(b) };
+    let Some(a) = dec(pk) else { return false };
+    let rb: [u8; 32] = sig[..32].try_into().unwrap();
+    let Some(r) = dec(&rb) else { return false };
+    let s: [u8; 32] = sig[32..].try_into().unwrap();
+    if !scalar_is_canonical(&s) { return false; }
+    let h = reduce_mod_l(&sha512(&[&rb, pk, msg]));
+    static BT: OnceLock<Vec<ed::Cached>> = OnceLock::new();
+    let bt = BT.get_or_init(|| ed::odd_multiples_cached(&ed::Ext::from_point(&Point::base()), WB));
+    let ta = ed::odd_multiples_cached(&ed::Ext::from_point(&a.neg()), WA);
+    let t = ed::double_scalar_vartime(&s, bt, WB, &h, &ta, WA);
+    t.to_point().add(&r.neg()).mul_by_cofactor().is_identity()
+}

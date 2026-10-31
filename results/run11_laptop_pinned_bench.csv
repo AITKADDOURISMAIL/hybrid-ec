@@ -1,0 +1,23 @@
+label,benchmark,N,R,inner,units_median,cycles_est,raw_ns_median,range_units_pct,clean_pct_min,calib_min_ns,calib_max_ns,unstable
+laptop-pinned,verify/ed25519/P_c reference (naive),10000,5,1,3658373.21,1829186.6,1532500.0,0.340,96.3,0.4180,0.6650,0
+laptop-pinned,verify/ed25519/P_c fast (wNAF),10000,5,1,1093779.90,546890.0,458100.0,0.089,96.5,0.4180,1.1730,0
+laptop-pinned,verify/ed25519/P_s fast (wNAF),10000,5,1,1247368.42,623684.2,522300.0,0.096,96.7,0.4180,0.6400,0
+laptop-pinned,verify/ed25519/P_c dedicated arithmetic only (unified decoding),10000,5,1,901435.41,450717.7,377500.0,0.079,96.4,0.4180,0.8180,0
+laptop-pinned,verify/ed25519/P_c dedicated (single-curve baseline),10000,5,1,616904.76,308452.4,258300.0,0.737,96.9,0.4180,0.6630,0
+laptop-pinned,verify/bip340 (GLV + wNAF),10000,5,1,1195933.01,597966.5,501200.0,3.115,96.1,0.4180,0.6400,0
+laptop-pinned,verify/bip340 dedicated arithmetic only (unified sqrt/inversion),10000,5,1,1141288.78,570644.4,478000.0,0.310,96.5,0.4180,1.9110,0
+laptop-pinned,verify/bip340 dedicated (single-curve baseline),10000,5,1,978758.95,489379.5,409900.0,0.376,96.6,0.4180,0.6710,0
+laptop-pinned,verify/ecdsa (GLV + wNAF),10000,5,1,1050238.10,525119.0,439800.0,0.295,96.8,0.4180,0.7450,0
+laptop-pinned,decode/ed25519 unified (inversion-free sqrt),10000,5,1,203579.95,101790.0,85300.0,0.122,96.5,0.4180,0.8890,0
+laptop-pinned,decode/ed25519 dedicated (chain),10000,5,2,63182.90,31591.4,26450.0,0.139,97.0,0.4180,0.5710,0
+laptop-pinned,batch/bip340 batch u=1,10000,5,1,3184689.00,1592344.5,1333700.0,0.127,96.4,0.4180,0.6990,0
+laptop-pinned,batch/bip340 individual x1,10000,5,1,1189021.48,594510.7,497900.0,0.279,96.8,0.4180,0.6960,0
+laptop-pinned,batch/bip340 batch u=4,2500,5,1,8303110.05,4151555.0,3479500.0,0.520,96.2,0.4180,0.6410,0
+laptop-pinned,batch/bip340 individual x4,2500,5,1,4784047.62,2392023.8,2004900.0,0.249,96.0,0.4180,0.6770,0
+laptop-pinned,batch/bip340 batch u=16,625,5,1,20827751.20,10413875.6,8736100.0,3.051,93.9,0.4180,0.5840,0
+laptop-pinned,batch/bip340 individual x16,625,5,1,19339047.62,9669523.8,8127200.0,0.445,94.6,0.4180,0.6740,0
+laptop-pinned,batch/bip340 batch u=64,156,5,1,60451666.67,30225833.3,25347800.0,0.439,92.3,0.4180,0.4490,0
+laptop-pinned,batch/bip340 individual x64,156,5,1,77825775.66,38912887.8,32635900.0,0.580,93.6,0.4180,0.6160,0
+laptop-pinned,batch/bip340 batch u=256,39,5,1,208699521.53,104349760.8,87619700.0,2.163,89.7,0.4180,0.4470,0
+laptop-pinned,batch/bip340 individual x256,39,5,1,318282057.42,159141028.7,133162900.0,3.029,84.6,0.4180,0.4330,0
+laptop-pinned,batch/bip340 batch u=1024,20,5,1,712787112.17,356393556.1,299021000.0,0.511,85.0,0.4180,0.4220,0

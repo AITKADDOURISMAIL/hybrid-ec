@@ -1,0 +1,85 @@
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'Cargo.lock', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'Cargo.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'LICENSE', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'bench/Cargo.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'bench/src/baselines.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'bench/src/bin/clockstates.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'bench/src/bin/ct.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'bench/src/bin/diff.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'bench/src/bin/diff2.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'bench/src/main.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'core/Cargo.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'core/src/fe25519.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'core/src/fe256k1.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'core/src/lib.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'core/tests/fe25519.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'core/tests/fe25519_vectors.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'core/tests/fe256k1.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'core/tests/fe256k1_vectors.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/Cargo.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/src/bn.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/src/ed25519.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/src/fixed_base.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/src/glv.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/src/group.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/src/lib.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/src/pippenger.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/src/secp256k1.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/src/wnaf.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/src/x25519.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/tests/ed25519.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/tests/ed_decode.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/tests/ed_points.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/tests/ed_scalar.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/tests/fast.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/tests/glv.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/tests/k1_points.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/tests/k1_scalar.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/tests/pippenger.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/tests/secp256k1.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'curves/tests/x25519.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'figures/make_figures.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'reference/gen_vectors.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'reference/gen_vectors_ed25519.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'reference/gen_vectors_k1.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'reference/gen_vectors_mixed_order.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'reference/gen_vectors_secp256k1.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'reference/gen_vectors_validation.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'reference/secp_sigs.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'reference/vp_ed25519.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'results/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'results/run4_summary.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'results/run5_batch_summary.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'results/run6_block_summary.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'results/run7_ct_summary.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'results/run8_diff2_output.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'results/run9_clockstates.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/Cargo.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/src/lib.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/src/secp_sig.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/src/sha256.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/src/sha512.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/tests/bip340.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/tests/ecdsa.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/tests/modl.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/tests/secp_sig.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/tests/sha256.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/tests/sha512.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/tests/validation.rs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/tests/validation.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/tests/wycheproof_ecdsa.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'validation/tests/wycheproof_ed25519.txt', LF will be replaced by CRLF the next time Git touches it
+ bench/Cargo.toml           |  4 [32m++++[m
+ bench/src/bin/diff2.rs     | 18 [32m++++++++[m[31m--------[m
+ bench/src/main.rs          | 39 [32m++++++++++++++++++++++++++++++++++[m
+ core/src/fe25519.rs        | 45 [32m+++++++++++++++++++++++++++++++++[m[31m------[m
+ core/src/fe256k1.rs        | 22 [32m++++++++++++++++++++[m
+ curves/src/ed25519.rs      |  6 [32m+++[m[31m---[m
+ curves/src/glv.rs          |  2 [32m+[m[31m-[m
+ curves/src/lib.rs          |  1 [32m+[m
+ results/README.md          |  5 [32m+++++[m
+ validation/src/lib.rs      | 22 [32m++++++++++++++++++++[m
+ validation/src/secp_sig.rs | 52 [32m++++++++++++++++++++++++++++++++++++++++++++++[m
+ 11 files changed, 197 insertions(+), 19 deletions(-)

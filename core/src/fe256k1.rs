@@ -46,6 +46,28 @@ impl Fe {
         let (a, b) = (&self.0, &o.0);
         let mut t = [0u128; 9];
         for i in 0..5 { for j in 0..5 { t[i + j] += (a[i] as u128) * (b[j] as u128); } }
+        Fe::finish(t)
+    }
+
+    /// Dedicated squaring: 15 limb products instead of 25. Same result as `square`.
+    pub fn square_fast(&self) -> Fe {
+        let a = &self.0;
+        let mut t = [0u128; 9];
+        for i in 0..5 {
+            t[2 * i] += (a[i] as u128) * (a[i] as u128);
+            for j in i + 1..5 { t[i + j] += 2 * (a[i] as u128) * (a[j] as u128); }
+        }
+        Fe::finish(t)
+    }
+
+    /// Addition without carry (dedicated baseline only): limbs stay below 2^54 for carried inputs. Use only as a direct
+    /// input of `mul`/`square_fast`, never as the subtrahend of `sub` (whose bias only covers carried values).
+    pub fn add_lazy(&self, o: &Fe) -> Fe {
+        Fe([self.0[0] + o.0[0], self.0[1] + o.0[1], self.0[2] + o.0[2], self.0[3] + o.0[3], self.0[4] + o.0[4]])
+    }
+
+    /// Reduction shared by `mul` and `square_fast`: input is the 9-column product.
+    fn finish(t: [u128; 9]) -> Fe {
         // 10 limbs of 52 bits
         let mut r = [0u64; 10];
         let mut c: u128 = 0;

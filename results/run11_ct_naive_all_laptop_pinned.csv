@@ -1,0 +1,41 @@
+routine,campaign,n_used,t_raw,t_max_cropped,dirty_pct,leak
+"control A/A (ed25519 fixed-base, both classes random)",1,96688,0.815,2.406,3.31,0
+"control A/A (ed25519 fixed-base, both classes random)",2,96873,0.451,1.859,3.13,0
+"control A/A (ed25519 fixed-base, both classes random)",3,96029,1.130,1.762,3.97,0
+"control A/A (ed25519 fixed-base, both classes random)",4,95906,1.835,2.448,4.09,0
+"control A/A (ed25519 fixed-base, both classes random)",5,96541,0.924,1.077,3.46,0
+"control field-chain (400 field multiplications of the secret, constant time by construction)",1,96804,1.352,1.352,3.20,0
+"control field-chain (400 field multiplications of the secret, constant time by construction)",2,96912,0.862,1.631,3.09,0
+"control field-chain (400 field multiplications of the secret, constant time by construction)",3,97015,0.245,2.808,2.98,0
+"control field-chain (400 field multiplications of the secret, constant time by construction)",4,97242,1.129,3.099,2.76,0
+"control field-chain (400 field multiplications of the secret, constant time by construction)",5,97261,0.174,2.306,2.74,0
+"control positive (leaky double-and-add, ed25519)",1,96561,1019.593,1905.933,3.44,1
+"control positive (leaky double-and-add, ed25519)",2,96289,1004.775,1822.662,3.71,1
+"control positive (leaky double-and-add, ed25519)",3,96395,870.717,1645.470,3.60,1
+"control positive (leaky double-and-add, ed25519)",4,95981,170.255,762.125,4.02,1
+"control positive (leaky double-and-add, ed25519)",5,96225,590.356,1344.880,3.77,1
+"secp256k1 fixed-base c=5 (keygen/signing path)",1,96247,10.943,57.043,3.75,1
+"secp256k1 fixed-base c=5 (keygen/signing path)",2,96465,12.251,71.447,3.54,1
+"secp256k1 fixed-base c=5 (keygen/signing path)",3,97040,12.609,61.975,2.96,1
+"secp256k1 fixed-base c=5 (keygen/signing path)",4,97019,13.250,70.983,2.98,1
+"secp256k1 fixed-base c=5 (keygen/signing path)",5,97054,15.445,73.014,2.95,1
+"ed25519 fixed-base c=4 (keygen/signing path)",1,96614,2.470,121.950,3.39,1
+"ed25519 fixed-base c=4 (keygen/signing path)",2,96525,0.336,95.782,3.48,1
+"ed25519 fixed-base c=4 (keygen/signing path)",3,96197,2.661,95.724,3.80,1
+"ed25519 fixed-base c=4 (keygen/signing path)",4,96605,2.443,110.539,3.40,1
+"ed25519 fixed-base c=4 (keygen/signing path)",5,96368,0.908,84.656,3.63,1
+"secp256k1 variable-base regular double-and-add",1,96415,4.930,13.398,3.58,1
+"secp256k1 variable-base regular double-and-add",2,96658,2.201,13.363,3.34,1
+"secp256k1 variable-base regular double-and-add",3,96518,4.593,13.161,3.48,1
+"secp256k1 variable-base regular double-and-add",4,96366,0.182,12.147,3.63,1
+"secp256k1 variable-base regular double-and-add",5,96611,5.554,13.436,3.39,1
+"ed25519 variable-base regular double-and-add",1,96622,1.361,4.078,3.38,0
+"ed25519 variable-base regular double-and-add",2,96586,2.012,5.429,3.41,1
+"ed25519 variable-base regular double-and-add",3,96493,0.256,3.685,3.51,0
+"ed25519 variable-base regular double-and-add",4,96782,1.589,3.795,3.22,0
+"ed25519 variable-base regular double-and-add",5,96050,0.122,4.928,3.95,1
+"x25519 Montgomery ladder",1,96581,9.792,165.061,3.42,1
+"x25519 Montgomery ladder",2,96556,9.818,139.632,3.44,1
+"x25519 Montgomery ladder",3,96434,12.236,143.828,3.57,1
+"x25519 Montgomery ladder",4,96610,10.746,130.810,3.39,1
+"x25519 Montgomery ladder",5,96911,12.741,157.133,3.09,1

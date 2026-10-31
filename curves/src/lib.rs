@@ -9,3 +9,4 @@ pub mod wnaf;
 pub mod bn;
 pub mod glv;
 pub mod pippenger;
+pub mod dedicated;

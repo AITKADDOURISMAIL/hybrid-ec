@@ -1,0 +1,14 @@
+shipped control-clean exit=0 cond_jump=0 uninit_address=0
+shipped control-leaky exit=9 cond_jump=1 uninit_address=0
+shipped fixed-base-ed25519 exit=0 cond_jump=0 uninit_address=0
+shipped fixed-base-secp256k1 exit=0 cond_jump=0 uninit_address=0
+shipped var-base-ed25519 exit=0 cond_jump=0 uninit_address=0
+shipped var-base-secp256k1 exit=0 cond_jump=0 uninit_address=0
+shipped x25519 exit=0 cond_jump=0 uninit_address=0
+naive control-clean exit=0 cond_jump=0 uninit_address=0
+naive control-leaky exit=9 cond_jump=1 uninit_address=0
+naive fixed-base-ed25519 exit=9 cond_jump=0 uninit_address=36
+naive fixed-base-secp256k1 exit=9 cond_jump=0 uninit_address=6
+naive var-base-ed25519 exit=9 cond_jump=0 uninit_address=1
+naive var-base-secp256k1 exit=9 cond_jump=0 uninit_address=1
+naive x25519 exit=9 cond_jump=0 uninit_address=4

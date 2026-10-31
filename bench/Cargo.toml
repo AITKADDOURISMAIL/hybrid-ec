@@ -26,3 +26,7 @@ required-features = ["baselines"]
 name = "diff2"
 path = "src/bin/diff2.rs"
 required-features = ["baselines"]
+
+[[bin]]
+name = "ctgrind"
+path = "src/bin/ctgrind.rs"

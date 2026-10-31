@@ -141,6 +141,13 @@ fn main() {
     bench(&mut cfg, "field/k1/mul", |_| { black_box(black_box(&ka).mul(black_box(&kb))); });
     bench(&mut cfg, "field/k1/square", |_| { black_box(black_box(&ka).square()); });
     bench(&mut cfg, "field/k1/invert", |_| { black_box(black_box(&ka).invert()); });
+    bench(&mut cfg, "field/25519/square_fast (dedicated)", |_| { black_box(black_box(&fa).square_fast()); });
+    bench(&mut cfg, "field/k1/square_fast (dedicated)", |_| { black_box(black_box(&ka).square_fast()); });
+    bench(&mut cfg, "field/k1/invert_chain (dedicated)", |_| { black_box(hec_curves::dedicated::k1::invert_chain(black_box(&ka))); });
+    let (bpt, bpk) = (ed25519::Point::base().compress(), [0u8; 0]);
+    let _ = bpk;
+    bench(&mut cfg, "decode/ed25519 unified (inversion-free sqrt)", |_| { black_box(ed25519::Point::decompress(black_box(&bpt))); });
+    bench(&mut cfg, "decode/ed25519 dedicated (chain)", |_| { black_box(hec_curves::dedicated::ed::decompress_chain(black_box(&bpt))); });
 
     // ---- point operations
     let g = secp256k1::generator();
@@ -176,9 +183,13 @@ fn main() {
     bench(&mut cfg, "verify/ed25519/P_c reference (naive)", |i| { let c = &ed[i % ed.len()]; black_box(verify(&c.0, &c.1, &c.2, Policy::Cofactored)); });
     bench(&mut cfg, "verify/ed25519/P_c fast (wNAF)", |i| { let c = &ed[i % ed.len()]; black_box(verify_fast(&c.0, &c.1, &c.2, Policy::Cofactored)); });
     bench(&mut cfg, "verify/ed25519/P_s fast (wNAF)", |i| { let c = &ed[i % ed.len()]; black_box(verify_fast(&c.0, &c.1, &c.2, Policy::Strict)); });
+    bench(&mut cfg, "verify/ed25519/P_c dedicated arithmetic only (unified decoding)", |i| { let c = &ed[i % ed.len()]; black_box(hec_validation::verify_fast_dedicated_arith_only(&c.0, &c.1, &c.2)); });
+    bench(&mut cfg, "verify/ed25519/P_c dedicated (single-curve baseline)", |i| { let c = &ed[i % ed.len()]; black_box(hec_validation::verify_fast_dedicated(&c.0, &c.1, &c.2)); });
     let bp: Vec<([u8; 32], Vec<u8>, [u8; 64])> = include_str!("../../validation/tests/bip340.txt").lines()
         .filter_map(|l| { let f: Vec<&str> = l.split(' ').collect(); if f[3] == "1" { Some((a32(f[0]), hx(f[1]), hx(f[2]).try_into().unwrap())) } else { None } }).collect();
     bench(&mut cfg, "verify/bip340 (GLV + wNAF)", |i| { let c = &bp[i % bp.len()]; black_box(secp_sig::bip340_verify(&c.0, &c.1, &c.2)); });
+    bench(&mut cfg, "verify/bip340 dedicated arithmetic only (unified sqrt/inversion)", |i| { let c = &bp[i % bp.len()]; black_box(secp_sig::bip340_verify_dedicated_arith_only(&c.0, &c.1, &c.2)); });
+    bench(&mut cfg, "verify/bip340 dedicated (single-curve baseline)", |i| { let c = &bp[i % bp.len()]; black_box(secp_sig::bip340_verify_dedicated(&c.0, &c.1, &c.2)); });
     let ec: Vec<[[u8; 32]; 5]> = include_str!("../../validation/tests/ecdsa.txt").lines()
         .filter_map(|l| { let f: Vec<&str> = l.split(' ').collect(); if f[5] == "1" { Some([a32(f[0]), a32(f[1]), a32(f[2]), a32(f[3]), a32(f[4])]) } else { None } }).collect();
     bench(&mut cfg, "verify/ecdsa (GLV + wNAF)", |i| { let c = &ec[i % ec.len()]; black_box(secp_sig::ecdsa_verify(&c[0], &c[1], &c[2], &c[3], &c[4])); });
@@ -216,6 +227,34 @@ fn main() {
         }
     }
     cfg.n = saved_n;
+
+    // ---- batch verification of BIP-340 (one batch of u valid signatures per call; 1024 distinct keys and messages
+    // signed by libsecp256k1, see reference/gen_vectors_vetted.py). libsecp256k1 and k256 have no batch API: their
+    // reference is u individual verifications.
+    if cfg.filter.is_empty() || cfg.filter.starts_with("batch") {
+        let bpool: Vec<([u8; 32], Vec<u8>, [u8; 64])> = include_str!("../../validation/tests/vetted_bip340_pool.txt").lines()
+            .map(|l| { let f: Vec<&str> = l.split(' ').collect(); (a32(f[0]), hx(f[1]), hx(f[2]).try_into().unwrap()) }).collect();
+        assert_eq!(bpool.len(), 1024);
+        assert!(bpool.iter().all(|c| secp_sig::bip340_verify(&c.0, &c.1, &c.2)));
+        assert!(secp_sig::bip340_verify_batch(&bpool, &zs[..1024]));
+        let saved_n = cfg.n;
+        for u in [1usize, 4, 16, 64, 256, 1024] {
+            cfg.n = (saved_n / u).max(20);
+            let items = &bpool[..u];
+            let name = format!("batch/bip340 batch u={}", u);
+            bench(&mut cfg, &name, |_| { black_box(secp_sig::bip340_verify_batch(black_box(items), black_box(&zs[..u]))); });
+            if u <= 256 {
+                let name = format!("batch/bip340 individual x{}", u);
+                bench(&mut cfg, &name, |_| { for it in black_box(items) { black_box(secp_sig::bip340_verify(&it.0, &it.1, &it.2)); } });
+                #[cfg(feature = "baselines")]
+                {
+                    let name = format!("batch/baseline libsecp256k1 schnorr individual x{}", u);
+                    bench(&mut cfg, &name, |_| { for it in black_box(items) { black_box(baselines::libsecp_schnorr(&it.0, &it.1, &it.2)); } });
+                }
+            }
+        }
+        cfg.n = saved_n;
+    }
 
     // ---- block validation: all signatures of a block, then the failure scenario
     if !pool.is_empty() && pool.len() >= 10_000 && (cfg.filter.is_empty() || cfg.filter.starts_with("block")) {

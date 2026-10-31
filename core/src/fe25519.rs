@@ -49,17 +49,50 @@ impl Fe {
         let c2 = m(a[0], b[2]) + m(a[1], b[1]) + m(a[2], b[0]) + m(a[3], b19[4]) + m(a[4], b19[3]);
         let c3 = m(a[0], b[3]) + m(a[1], b[2]) + m(a[2], b[1]) + m(a[3], b[0]) + m(a[4], b19[4]);
         let c4 = m(a[0], b[4]) + m(a[1], b[3]) + m(a[2], b[2]) + m(a[3], b[1]) + m(a[4], b[0]);
+        Fe::finish([c0, c1, c2, c3, c4])
+    }
+
+    /// Carry chain shared by `mul` and `square_fast`: inputs are the five 128-bit column sums.
+    fn finish(c: [u128; 5]) -> Fe {
         let mut r = [0u64; 5];
-        let mut c = c0; r[0] = (c as u64) & M51; c >>= 51;
-        let c1 = c1 + c; c = c1; r[1] = (c as u64) & M51; c >>= 51;
-        let c2 = c2 + c; c = c2; r[2] = (c as u64) & M51; c >>= 51;
-        let c3 = c3 + c; c = c3; r[3] = (c as u64) & M51; c >>= 51;
-        let c4 = c4 + c; c = c4; r[4] = (c as u64) & M51; c >>= 51;
-        r[0] += (c as u64) * 19;
+        let mut cc = c[0]; r[0] = (cc as u64) & M51; cc >>= 51;
+        let c1 = c[1] + cc; cc = c1; r[1] = (cc as u64) & M51; cc >>= 51;
+        let c2 = c[2] + cc; cc = c2; r[2] = (cc as u64) & M51; cc >>= 51;
+        let c3 = c[3] + cc; cc = c3; r[3] = (cc as u64) & M51; cc >>= 51;
+        let c4 = c[4] + cc; cc = c4; r[4] = (cc as u64) & M51; cc >>= 51;
+        r[0] += (cc as u64) * 19;
         Fe::carry(r)
     }
 
     pub fn square(&self) -> Fe { self.mul(self) }
+
+    // ---- Operations of the dedicated (non-unified) baseline of the paper (Section on the cost of unification).
+    // They are NOT used by the unified layer. Inputs of `mul`, `square` and `square_fast` may have limbs up to 2^54.
+
+    /// Dedicated squaring: 15 limb products instead of 25. Same result as `square`.
+    pub fn square_fast(&self) -> Fe {
+        let a = &self.0;
+        let m = |x: u64, y: u64| (x as u128) * (y as u128);
+        let (a3_19, a4_19) = (19 * a[3], 19 * a[4]);
+        let c0 = m(a[0], a[0]) + 2 * (m(a[1], a4_19) + m(a[2], a3_19));
+        let c1 = m(a[3], a3_19) + 2 * (m(a[0], a[1]) + m(a[2], a4_19));
+        let c2 = m(a[1], a[1]) + 2 * (m(a[0], a[2]) + m(a[4], a3_19));
+        let c3 = m(a[4], a4_19) + 2 * (m(a[0], a[3]) + m(a[1], a[2]));
+        let c4 = m(a[2], a[2]) + 2 * (m(a[0], a[4]) + m(a[1], a[3]));
+        Fe::finish([c0, c1, c2, c3, c4])
+    }
+
+    /// Addition without carry. For carried inputs the limbs stay below 2^53; use only as an input of `mul`/`square_fast`.
+    pub fn add_lazy(&self, o: &Fe) -> Fe {
+        Fe([self.0[0] + o.0[0], self.0[1] + o.0[1], self.0[2] + o.0[2], self.0[3] + o.0[3], self.0[4] + o.0[4]])
+    }
+
+    /// Subtraction without carry (adds 4p). Requires every limb of `o` below 2^53 - 76 and of `self` below 2^53.
+    pub fn sub_lazy(&self, o: &Fe) -> Fe {
+        const P0: u64 = 0x7ffffffffffed * 4;
+        const PN: u64 = 0x7ffffffffffff * 4;
+        Fe([self.0[0] + P0 - o.0[0], self.0[1] + PN - o.0[1], self.0[2] + PN - o.0[2], self.0[3] + PN - o.0[3], self.0[4] + PN - o.0[4]])
+    }
 
     /// Masked select: returns b if choice==1, a if choice==0.
     pub fn select(a: &Fe, b: &Fe, choice: u64) -> Fe {
